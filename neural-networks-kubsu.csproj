@@ -12,6 +12,7 @@
         <FileAlignment>512</FileAlignment>
         <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
         <Deterministic>true</Deterministic>
+        <LangVersion>latest</LangVersion>
     </PropertyGroup>
     <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
         <PlatformTarget>AnyCPU</PlatformTarget>
@@ -52,6 +53,30 @@
         <Compile Include="FormMain.Designer.cs">
             <DependentUpon>FormMain.cs</DependentUpon>
         </Compile>
+        <Compile Include="NeuralNetwork\ActivationFunction\IActivationFunction.cs" />
+        <Compile Include="NeuralNetwork\ActivationFunction\LinearActivationFunction\LinearActivationFunction.cs" />
+        <Compile Include="NeuralNetwork\ActivationFunction\RawActivationFunction\RawActivationFunction.cs" />
+        <Compile Include="NeuralNetwork\ActivationFunction\SigmoidActivationFunction\SigmoidActivationFunction.cs" />
+        <Compile Include="NeuralNetwork\ActivationFunction\TanhActivationFunction\TanhActivationFunction.cs" />
+        <Compile Include="NeuralNetwork\Layer\AbstractLayer.cs" />
+        <Compile Include="NeuralNetwork\Layer\HiddenLayer\HiddenLayer.cs" />
+        <Compile Include="NeuralNetwork\Layer\HiddenLayer\IHiddenLayer.cs" />
+        <Compile Include="NeuralNetwork\Layer\ILayer.cs" />
+        <Compile Include="NeuralNetwork\Layer\InputLayer\IInputLayer.cs" />
+        <Compile Include="NeuralNetwork\Layer\InputLayer\InputLayer.cs" />
+        <Compile Include="NeuralNetwork\Layer\OutputLayer\IOutputLayer.cs" />
+        <Compile Include="NeuralNetwork\Layer\OutputLayer\OutputLayer.cs" />
+        <Compile Include="NeuralNetwork\LossFunction\EuclideanDistanceLoss\EuclideanDistanceLoss.cs" />
+        <Compile Include="NeuralNetwork\LossFunction\ILossFunction.cs" />
+        <Compile Include="NeuralNetwork\Neuron\INeuron.cs" />
+        <Compile Include="NeuralNetwork\Neuron\InputNeuron\IInputNeuron.cs" />
+        <Compile Include="NeuralNetwork\Neuron\InputNeuron\InputNeuron.cs" />
+        <Compile Include="NeuralNetwork\Neuron\Neuron.cs" />
+        <Compile Include="NeuralNetwork\NeuralNetwork.cs" />
+        <Compile Include="NeuralNetwork\WeightsInitializer\DefaultWeightsInitializer\DefaultWeightsInitializer.cs" />
+        <Compile Include="NeuralNetwork\WeightsInitializer\IWeightsInitializer.cs" />
+        <Compile Include="NeuralNetwork\WeightsInitializer\OnesWeightsInitializer\OnesWeightsInitializer.cs" />
+        <Compile Include="NeuralNetwork\WeightsInitializer\ZerosWeightsInitializer\ZerosWeightsInitializer.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
         <EmbeddedResource Include="FormMain.resx">

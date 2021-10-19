@@ -41,6 +41,12 @@
             this.button8 = new System.Windows.Forms.Button();
             this.button7 = new System.Windows.Forms.Button();
             this.button6 = new System.Windows.Forms.Button();
+            this.labelStatus = new System.Windows.Forms.Label();
+            this.button14 = new System.Windows.Forms.Button();
+            this.button13 = new System.Windows.Forms.Button();
+            this.button12 = new System.Windows.Forms.Button();
+            this.labelNeuronValue = new System.Windows.Forms.Label();
+            this.button15 = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
             // button0
@@ -53,6 +59,7 @@
             this.button0.Size = new System.Drawing.Size(100, 100);
             this.button0.TabIndex = 0;
             this.button0.UseVisualStyleBackColor = false;
+            this.button0.Click += new System.EventHandler(this.button0_Click);
             // 
             // button1
             // 
@@ -64,6 +71,7 @@
             this.button1.Size = new System.Drawing.Size(100, 100);
             this.button1.TabIndex = 1;
             this.button1.UseVisualStyleBackColor = false;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
             // button2
             // 
@@ -75,6 +83,7 @@
             this.button2.Size = new System.Drawing.Size(100, 100);
             this.button2.TabIndex = 2;
             this.button2.UseVisualStyleBackColor = false;
+            this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button5
             // 
@@ -86,6 +95,7 @@
             this.button5.Size = new System.Drawing.Size(100, 100);
             this.button5.TabIndex = 5;
             this.button5.UseVisualStyleBackColor = false;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
             // 
             // button4
             // 
@@ -97,6 +107,7 @@
             this.button4.Size = new System.Drawing.Size(100, 100);
             this.button4.TabIndex = 4;
             this.button4.UseVisualStyleBackColor = false;
+            this.button4.Click += new System.EventHandler(this.button4_Click);
             // 
             // button3
             // 
@@ -108,6 +119,7 @@
             this.button3.Size = new System.Drawing.Size(100, 100);
             this.button3.TabIndex = 3;
             this.button3.UseVisualStyleBackColor = false;
+            this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button11
             // 
@@ -119,6 +131,7 @@
             this.button11.Size = new System.Drawing.Size(100, 100);
             this.button11.TabIndex = 11;
             this.button11.UseVisualStyleBackColor = false;
+            this.button11.Click += new System.EventHandler(this.button11_Click);
             // 
             // button10
             // 
@@ -130,6 +143,7 @@
             this.button10.Size = new System.Drawing.Size(100, 100);
             this.button10.TabIndex = 10;
             this.button10.UseVisualStyleBackColor = false;
+            this.button10.Click += new System.EventHandler(this.button10_Click);
             // 
             // button9
             // 
@@ -141,6 +155,7 @@
             this.button9.Size = new System.Drawing.Size(100, 100);
             this.button9.TabIndex = 9;
             this.button9.UseVisualStyleBackColor = false;
+            this.button9.Click += new System.EventHandler(this.button9_Click);
             // 
             // button8
             // 
@@ -152,6 +167,7 @@
             this.button8.Size = new System.Drawing.Size(100, 100);
             this.button8.TabIndex = 8;
             this.button8.UseVisualStyleBackColor = false;
+            this.button8.Click += new System.EventHandler(this.button8_Click);
             // 
             // button7
             // 
@@ -163,6 +179,7 @@
             this.button7.Size = new System.Drawing.Size(100, 100);
             this.button7.TabIndex = 7;
             this.button7.UseVisualStyleBackColor = false;
+            this.button7.Click += new System.EventHandler(this.button7_Click);
             // 
             // button6
             // 
@@ -174,13 +191,82 @@
             this.button6.Size = new System.Drawing.Size(100, 100);
             this.button6.TabIndex = 6;
             this.button6.UseVisualStyleBackColor = false;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
-            // Form1
+            // labelStatus
+            // 
+            this.labelStatus.Location = new System.Drawing.Point(344, 9);
+            this.labelStatus.Name = "labelStatus";
+            this.labelStatus.Size = new System.Drawing.Size(143, 165);
+            this.labelStatus.TabIndex = 12;
+            this.labelStatus.Text = "Prediction";
+            // 
+            // button14
+            // 
+            this.button14.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button14.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button14.Location = new System.Drawing.Point(200, 400);
+            this.button14.Margin = new System.Windows.Forms.Padding(0);
+            this.button14.Name = "button14";
+            this.button14.Size = new System.Drawing.Size(100, 100);
+            this.button14.TabIndex = 14;
+            this.button14.UseVisualStyleBackColor = false;
+            this.button14.Click += new System.EventHandler(this.button14_Click);
+            // 
+            // button13
+            // 
+            this.button13.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button13.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button13.Location = new System.Drawing.Point(100, 400);
+            this.button13.Margin = new System.Windows.Forms.Padding(0);
+            this.button13.Name = "button13";
+            this.button13.Size = new System.Drawing.Size(100, 100);
+            this.button13.TabIndex = 13;
+            this.button13.UseVisualStyleBackColor = false;
+            this.button13.Click += new System.EventHandler(this.button13_Click);
+            // 
+            // button12
+            // 
+            this.button12.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.button12.ForeColor = System.Drawing.SystemColors.ActiveCaptionText;
+            this.button12.Location = new System.Drawing.Point(0, 400);
+            this.button12.Margin = new System.Windows.Forms.Padding(0);
+            this.button12.Name = "button12";
+            this.button12.Size = new System.Drawing.Size(100, 100);
+            this.button12.TabIndex = 12;
+            this.button12.UseVisualStyleBackColor = false;
+            this.button12.Click += new System.EventHandler(this.button12_Click);
+            // 
+            // labelNeuronValue
+            // 
+            this.labelNeuronValue.Location = new System.Drawing.Point(344, 191);
+            this.labelNeuronValue.Name = "labelNeuronValue";
+            this.labelNeuronValue.Size = new System.Drawing.Size(143, 284);
+            this.labelNeuronValue.TabIndex = 15;
+            this.labelNeuronValue.Text = "Status";
+            // 
+            // button15
+            // 
+            this.button15.Location = new System.Drawing.Point(347, 478);
+            this.button15.Name = "button15";
+            this.button15.Size = new System.Drawing.Size(139, 41);
+            this.button15.TabIndex = 16;
+            this.button15.Text = "Fit/Predict";
+            this.button15.UseVisualStyleBackColor = true;
+            this.button15.Click += new System.EventHandler(this.button15_Click);
+            // 
+            // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(300, 461);
+            this.ClientSize = new System.Drawing.Size(653, 555);
+            this.Controls.Add(this.button15);
+            this.Controls.Add(this.labelNeuronValue);
+            this.Controls.Add(this.button14);
+            this.Controls.Add(this.button13);
+            this.Controls.Add(this.button12);
+            this.Controls.Add(this.labelStatus);
             this.Controls.Add(this.button11);
             this.Controls.Add(this.button10);
             this.Controls.Add(this.button9);
@@ -194,13 +280,20 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button0);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
-            this.Name = "Form1";
+            this.Name = "FormMain";
             this.Text = "Neural Network Window";
             this.ResumeLayout(false);
         }
 
-        private System.Windows.Forms.Button button0;
+        private System.Windows.Forms.Button button15;
 
+        private System.Windows.Forms.Label labelNeuronValue;
+
+        private System.Windows.Forms.Label labelStatus;
+        private System.Windows.Forms.Button button0;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
         private System.Windows.Forms.Button button5;
         private System.Windows.Forms.Button button6;
@@ -210,11 +303,8 @@
         private System.Windows.Forms.Button button10;
         private System.Windows.Forms.Button button11;
         private System.Windows.Forms.Button button12;
-
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button13;
+        private System.Windows.Forms.Button button14;
 
         #endregion
     }
