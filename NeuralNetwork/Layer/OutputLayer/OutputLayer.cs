@@ -24,11 +24,10 @@ namespace neural_networks_kubsu.NeuralNetwork.Layer.OutputLayer
 
         public void ComputeDelta(double[] expectedData)
         {
-            var results = Result;
             foreach (var i in Enumerable.Range(0, Neurons.Length))
             {
-                var errorValue = expectedData[i] - Neurons[i].ActivationValue;
-                Neurons[i].Delta = -ActivationFunction.Derivative(Neurons[i].NeuronValue) * errorValue;
+                var errorValue = Math.Pow(expectedData[i] - Neurons[i].ActivationValue, 2.0);
+                Neurons[i].Delta = ActivationFunction.Derivative(Neurons[i].NeuronValue) * errorValue;
             }
         }
     }
