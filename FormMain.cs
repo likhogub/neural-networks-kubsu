@@ -1,8 +1,12 @@
 ﻿using System;
 using System.Drawing;
+using System.Linq;
 using System.Threading;
 using System.Windows.Forms;
+using neural_networks_kubsu.NeuralNetwork.ActivationFunction.IdentityActivationFunction;
+using neural_networks_kubsu.NeuralNetwork.ActivationFunction.LinearActivationFunction;
 using neural_networks_kubsu.NeuralNetwork.ActivationFunction.SigmoidActivationFunction;
+using neural_networks_kubsu.NeuralNetwork.ActivationFunction.TanhActivationFunction;
 using neural_networks_kubsu.NeuralNetwork.LossFunction.EuclideanDistanceLoss;
 using neural_networks_kubsu.NeuralNetwork.WeightsInitializer.DefaultWeightsInitializer;
 
@@ -134,14 +138,7 @@ namespace neural_networks_kubsu
 
         private void run()
         {
-            _nn = NeuralNetwork.NeuralNetwork.Builder()
-                .InputLayer(15)
-                // .HiddenLayer(76, new LinearActivationFunction())
-                .HiddenLayer(1000, new SigmoidActivationFunction())
-                .OutputLayer(10, new SigmoidActivationFunction())
-                .LossFunction(new EuclideanDistanceLoss())
-                .Build();
-            _nn.Initialize(new DefaultWeightsInitializer());
+            regen();
         }
 
         private void btn_click(Button btn)
@@ -253,7 +250,29 @@ namespace neural_networks_kubsu
 
         private void Fit()
         {
-            _nn.Fit(_inputData, _outputData, 500000, 0.1);
+            foreach (var VARIABLE in Enumerable.Range(0, 100000))
+            {
+                label1.Text = "" + VARIABLE;
+                _nn.Fit(_inputData, _outputData, 100, 0.0, 0.01);
+                Predict();
+                // Evaluate();
+            }
+        }
+
+        private void button16_Click(object sender, EventArgs e)
+        {
+            regen();
+        }
+
+        private void regen()
+        {
+            _nn = NeuralNetwork.NeuralNetwork.Builder()
+                .InputLayer(15)
+                .HiddenLayer(2500, new SigmoidActivationFunction())
+                .OutputLayer(10, new SigmoidActivationFunction())
+                .LossFunction(new EuclideanDistanceLoss())
+                .Build();
+            _nn.Initialize(new DefaultWeightsInitializer());
             Predict();
             Evaluate();
         }

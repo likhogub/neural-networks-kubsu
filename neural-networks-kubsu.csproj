@@ -55,7 +55,7 @@
         </Compile>
         <Compile Include="NeuralNetwork\ActivationFunction\IActivationFunction.cs" />
         <Compile Include="NeuralNetwork\ActivationFunction\LinearActivationFunction\LinearActivationFunction.cs" />
-        <Compile Include="NeuralNetwork\ActivationFunction\RawActivationFunction\RawActivationFunction.cs" />
+        <Compile Include="NeuralNetwork\ActivationFunction\IdentityActivationFunction\IdentityActivationFunction.cs" />
         <Compile Include="NeuralNetwork\ActivationFunction\SigmoidActivationFunction\SigmoidActivationFunction.cs" />
         <Compile Include="NeuralNetwork\ActivationFunction\TanhActivationFunction\TanhActivationFunction.cs" />
         <Compile Include="NeuralNetwork\Layer\AbstractLayer.cs" />

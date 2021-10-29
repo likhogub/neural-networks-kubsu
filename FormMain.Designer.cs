@@ -47,6 +47,8 @@
             this.button12 = new System.Windows.Forms.Button();
             this.labelNeuronValue = new System.Windows.Forms.Label();
             this.button15 = new System.Windows.Forms.Button();
+            this.button16 = new System.Windows.Forms.Button();
+            this.label1 = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button0
@@ -255,12 +257,32 @@
             this.button15.UseVisualStyleBackColor = true;
             this.button15.Click += new System.EventHandler(this.button15_Click);
             // 
+            // button16
+            // 
+            this.button16.Location = new System.Drawing.Point(515, 480);
+            this.button16.Name = "button16";
+            this.button16.Size = new System.Drawing.Size(90, 38);
+            this.button16.TabIndex = 17;
+            this.button16.Text = "regen";
+            this.button16.UseVisualStyleBackColor = true;
+            this.button16.Click += new System.EventHandler(this.button16_Click);
+            // 
+            // label1
+            // 
+            this.label1.Location = new System.Drawing.Point(530, 196);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(54, 23);
+            this.label1.TabIndex = 18;
+            this.label1.Text = "label1";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.ClientSize = new System.Drawing.Size(653, 555);
+            this.Controls.Add(this.label1);
+            this.Controls.Add(this.button16);
             this.Controls.Add(this.button15);
             this.Controls.Add(this.labelNeuronValue);
             this.Controls.Add(this.button14);
@@ -284,6 +306,10 @@
             this.Text = "Neural Network Window";
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Label label1;
+
+        private System.Windows.Forms.Button button16;
 
         private System.Windows.Forms.Button button15;
 

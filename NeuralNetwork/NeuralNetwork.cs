@@ -61,20 +61,20 @@ namespace neural_networks_kubsu.NeuralNetwork
             }
         }
 
-        public void CorrectWeights()
+        public void CorrectWeights(double learningRate)
         {
             foreach (var layer in _layers)
             {
-                layer.CorrectWeights();                
+                layer.CorrectWeights(learningRate);                
             }
         }
         
-        public void ComputeDelta(double[] data, double learningRate)
+        public void ComputeDelta(double[] data, double inertiaCoef)
         {
             OutputLayer.ComputeDelta(data);
             for (int i = _layers.Count - 2; i >= 0; i--)
             {
-                _layers[i].ComputeDelta(learningRate);
+                _layers[i].ComputeDelta(inertiaCoef);
             }
 
             // var s = "";
@@ -91,17 +91,18 @@ namespace neural_networks_kubsu.NeuralNetwork
             // FormMain.LabelNeurons.Text = s;
         }
         
-        public void Fit(double[][] inputBatch, double[][] outputBatch, int epochs, double learningRate)
+        public void Fit(double[][] inputBatch, double[][] outputBatch, int epochs, double inertiaCoef, double learningRate)
         {
             foreach (var epoch in Enumerable.Range(0, epochs))
             {
                 foreach (var i in Enumerable.Range(0, inputBatch.Length))
                 {
-                    ComputeDelta(inputBatch[i], learningRate);
-                    CorrectWeights();
+                    Predict(inputBatch[i]);
+                    ComputeDelta(outputBatch[i], inertiaCoef);
+                    CorrectWeights(learningRate);
                 }
 
-                if (epoch % 1 == 0)
+                if (epoch % 10 == 0)
                 {
                     FormMain.LabelNeurons.Text = "" + epoch + " " + Evaluate(inputBatch, outputBatch);
                 }

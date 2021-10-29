@@ -2,5 +2,6 @@
 	
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/CheckedGroups/=neural_002Dnetworks_002Dkubsu_002FFormMain/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/ResxEditorPersonal/Initialized/@EntryValue">True</s:Boolean>
+	<s:Boolean x:Key="/Default/UserDictionary/Words/=Coef/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Initializable/@EntryIndexedValue">True</s:Boolean>
 	<s:Boolean x:Key="/Default/UserDictionary/Words/=Saveable/@EntryIndexedValue">True</s:Boolean></wpf:ResourceDictionary>
