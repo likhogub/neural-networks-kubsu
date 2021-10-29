@@ -9,6 +9,6 @@ namespace neural_networks_kubsu.NeuralNetwork.Neuron
         double[] Weights { get; }
         double Delta { get; set; }
         void Compute(ILayer prevLayer);
-        void Correct();
+        void Correct(double learningRate);
     }
 }

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using neural_networks_kubsu.NeuralNetwork.ActivationFunction;
 using neural_networks_kubsu.NeuralNetwork.Layer;
 
@@ -32,11 +31,11 @@ namespace neural_networks_kubsu.NeuralNetwork.Neuron
             ActivationValue = _activationFunction.Activate(sum);
         }
 
-        public void Correct()
+        public void Correct(double learningRate)
         {
             foreach (var i in Enumerable.Range(0, Weights.Length))
             {
-                Weights[i] -= Delta*_activationFunction.Derivative(ActivationValue);
+                Weights[i] -= learningRate*Delta*_activationFunction.Derivative(NeuronValue);
             }
         }
     }
