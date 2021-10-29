@@ -23,11 +23,11 @@ namespace neural_networks_kubsu.NeuralNetwork.Layer.HiddenLayer
             }
         }
 
-        public void CorrectWeights()
+        public void CorrectWeights(double learningRate)
         {
             foreach (var neuron in Neurons)
             {
-                neuron.Correct();
+                neuron.Correct(learningRate);
             }
         }
 
@@ -39,7 +39,7 @@ namespace neural_networks_kubsu.NeuralNetwork.Layer.HiddenLayer
             }
         }
 
-        public void ComputeDelta(double learningRate)
+        public void ComputeDelta(double inertiaCoef)
         {
             foreach (var i in Enumerable.Range(0, Neurons.Length))
             {
@@ -49,7 +49,7 @@ namespace neural_networks_kubsu.NeuralNetwork.Layer.HiddenLayer
                 {
                     computedDelta += NextLayer.Neurons[j].Weights[i] * NextLayer.Neurons[j].Delta;
                 }
-                Neurons[i].Delta = (learningRate * Neurons[i].Delta + (1 - learningRate) * g * computedDelta);
+                Neurons[i].Delta = (inertiaCoef * Neurons[i].Delta + (1 - inertiaCoef) * g * computedDelta);
             }
         }
     }

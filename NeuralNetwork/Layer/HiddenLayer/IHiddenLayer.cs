@@ -6,8 +6,8 @@
         ILayer NextLayer { get; set; }
         double[][] Weights { get; set; }
         void ComputeNeurons();
-        void CorrectWeights();
+        void CorrectWeights(double learningRate);
         void Initialize();
-        public void ComputeDelta(double learningRate);
+        public void ComputeDelta(double inertiaCoef);
     }
 }
