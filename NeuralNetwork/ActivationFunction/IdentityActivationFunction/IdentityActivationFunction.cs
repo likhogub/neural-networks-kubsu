@@ -1,6 +1,6 @@
-﻿namespace neural_networks_kubsu.NeuralNetwork.ActivationFunction.RawActivationFunction
+﻿namespace neural_networks_kubsu.NeuralNetwork.ActivationFunction.IdentityActivationFunction
 {
-    public class RawActivationFunction : IActivationFunction
+    public class IdentityActivationFunction : IActivationFunction
     {
         public double Activate(double value)
         {

@@ -11,7 +11,7 @@ namespace neural_networks_kubsu.NeuralNetwork.ActivationFunction.TanhActivationF
 
         public double Derivative(double value)
         {
-            return Math.Min(1.0 - Math.Pow(Activate(value), 2), 0.0001);
+            return 1.0 - Math.Pow(Activate(value), 2);
         }
     }
 }

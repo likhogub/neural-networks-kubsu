@@ -1,6 +1,6 @@
 ﻿using System.Linq;
 
-namespace neural_networks_kubsu.NeuralNetwork.WeightsInitializer.ZeroDefaultInitializer
+namespace neural_networks_kubsu.NeuralNetwork.WeightsInitializer.ZerosWeightsInitializer
 {
     public class ZerosWeightsInitializer : IWeightsInitializer
     {
