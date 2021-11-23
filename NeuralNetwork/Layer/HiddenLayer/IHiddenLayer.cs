@@ -8,6 +8,6 @@
         void ComputeNeurons();
         void CorrectWeights(double learningRate);
         void Initialize();
-        public void ComputeDelta(double inertiaCoef);
+        public void ComputeDelta();
     }
 }

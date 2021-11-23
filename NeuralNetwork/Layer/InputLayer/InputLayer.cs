@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using neural_networks_kubsu.NeuralNetwork.Neuron.InputNeuron;
+﻿using neural_networks_kubsu.NeuralNetwork.Neuron.InputNeuron;
 
 namespace neural_networks_kubsu.NeuralNetwork.Layer.InputLayer
 {
@@ -7,7 +6,7 @@ namespace neural_networks_kubsu.NeuralNetwork.Layer.InputLayer
     {
         public InputLayer(int units) : base(units)
         {
-            foreach (var i in Enumerable.Range(0, units))
+            for (var i = 0; i < units; i++)
             {
                 Neurons[i] = new InputNeuron();
             }
@@ -15,7 +14,7 @@ namespace neural_networks_kubsu.NeuralNetwork.Layer.InputLayer
 
         public void Feed(double[] inputData)
         {
-            foreach (var i in Enumerable.Range(0, inputData.Length))
+            for (var i = 0; i < inputData.Length; i++)
             {
                 ((InputNeuron) Neurons[i]).ActivationValue = inputData[i];
             }

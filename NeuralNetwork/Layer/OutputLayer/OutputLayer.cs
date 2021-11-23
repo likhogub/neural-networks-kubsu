@@ -1,32 +1,31 @@
-﻿using System;
-using System.Linq;
-
-namespace neural_networks_kubsu.NeuralNetwork.Layer.OutputLayer
+﻿namespace neural_networks_kubsu.NeuralNetwork.Layer.OutputLayer
 {
     public class OutputLayer : HiddenLayer.HiddenLayer, IOutputLayer
     {
+        private readonly double[] _result;
+        
         public double[] Result
         {
             get
             {
-                var result = new double[Neurons.Length];
-                foreach (var i in Enumerable.Range(0, Neurons.Length))
+                for (var i = 0; i < Neurons.Length; i++)
                 {
-                    result[i] = Neurons[i].ActivationValue;
+                    _result[i] = Neurons[i].ActivationValue;
                 }
-                return result;
+                return _result;
             }
         }
 
         public OutputLayer(int units) : base(units)
         {
+            _result = new double[units];
         }
 
         public void ComputeDelta(double[] expectedData)
         {
-            foreach (var i in Enumerable.Range(0, Neurons.Length))
+            for (var i = 0; i < Neurons.Length; i++)
             {
-                var errorValue = Math.Pow(expectedData[i] - Neurons[i].ActivationValue, 2.0);
+                var errorValue = expectedData[i] - Neurons[i].ActivationValue;
                 Neurons[i].Delta = ActivationFunction.Derivative(Neurons[i].NeuronValue) * errorValue;
             }
         }

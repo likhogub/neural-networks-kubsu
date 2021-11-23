@@ -16,10 +16,6 @@ namespace neural_networks_kubsu.NeuralNetwork
         private IOutputLayer OutputLayer => (IOutputLayer) _layers.Last();
         private readonly List<IHiddenLayer> _layers = new();
         private ILossFunction _lossFunction;
-        
-        public NeuralNetwork()
-        {
-        }
 
         public double[] Predict(double[] inputData)
         {
@@ -28,6 +24,7 @@ namespace neural_networks_kubsu.NeuralNetwork
             {
                 layer.ComputeNeurons();
             }
+
             return OutputLayer.Result;
         }
 
@@ -39,7 +36,8 @@ namespace neural_networks_kubsu.NeuralNetwork
                 _layers[0].Neurons.Length,
                 1
             );
-            foreach (var layerIndex in Enumerable.Range(1, _layers.Count - 1))
+            
+            for (var layerIndex = 1; layerIndex < _layers.Count; layerIndex++)
             {
                 _layers[layerIndex].Weights = weightsInitializer.Initialize(
                     _layers[layerIndex - 1].Neurons.Length,
@@ -47,64 +45,54 @@ namespace neural_networks_kubsu.NeuralNetwork
                     layerIndex + 1
                 );
             }
-            foreach (var layerIndex in Enumerable.Range(0, _layers.Count - 1))
+
+            for (var layerIndex = 0; layerIndex < _layers.Count - 1; layerIndex++)
             {
                 _layers[layerIndex].NextLayer = _layers[layerIndex + 1];
             }
-            foreach (var layerIndex in Enumerable.Range(1, _layers.Count - 1))
+
+            for (var layerIndex = 1; layerIndex <= _layers.Count - 1; layerIndex++)
             {
                 _layers[layerIndex].PreviousLayer = _layers[layerIndex - 1];
             }
-            foreach (var layerIndex in Enumerable.Range(0, _layers.Count))
+
+            foreach (var layer in _layers)
             {
-                _layers[layerIndex].Initialize();
+                layer.Initialize();
             }
         }
 
-        public void CorrectWeights(double learningRate)
+        private void CorrectWeights(double learningRate)
         {
             foreach (var layer in _layers)
             {
-                layer.CorrectWeights(learningRate);                
+                layer.CorrectWeights(learningRate);
             }
         }
-        
-        public void ComputeDelta(double[] data, double inertiaCoef)
+
+        private void ComputeDelta(double[] data)
         {
             OutputLayer.ComputeDelta(data);
-            for (int i = _layers.Count - 2; i >= 0; i--)
+            for (var i = _layers.Count - 2; i >= 0; i--)
             {
-                _layers[i].ComputeDelta(inertiaCoef);
+                _layers[i].ComputeDelta();
             }
-
-            // var s = "";
-            // foreach (var layer in _layers)
-            // {
-            //     foreach (var neuron in layer.Neurons)
-            //     {
-            //         s += neuron.Delta + "\n";
-            //     }
-            //
-            //     s += "\n";
-            // }
-            //
-            // FormMain.LabelNeurons.Text = s;
         }
-        
-        public void Fit(double[][] inputBatch, double[][] outputBatch, int epochs, double inertiaCoef, double learningRate)
+
+        public void Fit(double[][] inputBatch, double[][] outputBatch, int epochs, double learningRate)
         {
-            foreach (var epoch in Enumerable.Range(0, epochs))
+            for (var epoch = 0; epoch < epochs; epoch++)
             {
-                foreach (var i in Enumerable.Range(0, inputBatch.Length))
+                for (var i = 0; i < inputBatch.Length; i++)
                 {
                     Predict(inputBatch[i]);
-                    ComputeDelta(outputBatch[i], inertiaCoef);
+                    ComputeDelta(outputBatch[i]);
                     CorrectWeights(learningRate);
                 }
 
                 if (epoch % 10 == 0)
                 {
-                    FormMain.LabelNeurons.Text = "" + epoch + " " + Evaluate(inputBatch, outputBatch);
+                    FormMain.LabelNeurons.Text = "Loss: " + Evaluate(inputBatch, outputBatch);
                 }
             }
         }
@@ -112,13 +100,13 @@ namespace neural_networks_kubsu.NeuralNetwork
         public double Evaluate(double[][] inputBatch, double[][] outputBatch)
         {
             var s = 0.0;
-            foreach (var i in Enumerable.Range(0, inputBatch.Length))
+            for (var i = 0; i < inputBatch.Length; i++)
             {
                 s += Math.Pow(_lossFunction.ComputeLoss(Predict(inputBatch[i]), outputBatch[i]), 2.0);
             }
             return Math.Sqrt(s);
         }
-        
+
         public static NeuralNetworkBuilder Builder()
         {
             return new NeuralNetworkBuilder();
@@ -141,13 +129,13 @@ namespace neural_networks_kubsu.NeuralNetwork
 
             public NeuralNetworkBuilder HiddenLayer(int units, IActivationFunction activationFunction)
             {
-                _instance._layers.Add(new HiddenLayer(units){ActivationFunction = activationFunction});
+                _instance._layers.Add(new HiddenLayer(units) {ActivationFunction = activationFunction});
                 return this;
             }
 
             public NeuralNetworkBuilder OutputLayer(int units, IActivationFunction activationFunction)
             {
-                _instance._layers.Add(new OutputLayer(units){ActivationFunction = activationFunction});
+                _instance._layers.Add(new OutputLayer(units) {ActivationFunction = activationFunction});
                 return this;
             }
 
@@ -156,7 +144,7 @@ namespace neural_networks_kubsu.NeuralNetwork
                 _instance._lossFunction = lossFunction;
                 return this;
             }
-            
+
             public NeuralNetwork Build()
             {
                 if (_instance._inputLayer == null)
@@ -173,7 +161,7 @@ namespace neural_networks_kubsu.NeuralNetwork
                 {
                     throw new Exception("LossFunction not provided");
                 }
-                
+
                 return _instance;
             }
         }

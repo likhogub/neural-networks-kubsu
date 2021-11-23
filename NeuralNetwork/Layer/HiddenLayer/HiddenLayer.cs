@@ -1,6 +1,4 @@
-﻿using System;
-using System.Linq;
-using neural_networks_kubsu.NeuralNetwork.ActivationFunction;
+﻿using neural_networks_kubsu.NeuralNetwork.ActivationFunction;
 
 namespace neural_networks_kubsu.NeuralNetwork.Layer.HiddenLayer
 {
@@ -27,29 +25,28 @@ namespace neural_networks_kubsu.NeuralNetwork.Layer.HiddenLayer
         {
             foreach (var neuron in Neurons)
             {
-                neuron.Correct(learningRate);
+                neuron.Correct(learningRate, PreviousLayer);
             }
         }
 
         public void Initialize()
         {
-            foreach (var i in Enumerable.Range(0, Weights.Length))
+            for (var i = 0; i < Weights.Length; i++)
             {
                 Neurons[i] = new Neuron.Neuron(Weights[i], ActivationFunction);
             }
         }
 
-        public void ComputeDelta(double inertiaCoef)
+        public void ComputeDelta()
         {
-            foreach (var i in Enumerable.Range(0, Neurons.Length))
+            for (var i = 0; i < Neurons.Length; i++)
             {
                 var computedDelta = 0.0;
-                var g = ActivationFunction.Derivative(Neurons[i].NeuronValue);
-                foreach (var j in Enumerable.Range(0, NextLayer.Neurons.Length))
+                for (var j = 0; j < NextLayer.Neurons.Length; j++)
                 {
-                    computedDelta += NextLayer.Neurons[j].Weights[i] * NextLayer.Neurons[j].Delta;
+                    computedDelta += NextLayer.Neurons[j].Delta * NextLayer.Neurons[j].Weights[i];
                 }
-                Neurons[i].Delta = (inertiaCoef * Neurons[i].Delta + (1 - inertiaCoef) * g * computedDelta);
+                Neurons[i].Delta = computedDelta * ActivationFunction.Derivative(Neurons[i].NeuronValue);
             }
         }
     }

@@ -45,10 +45,12 @@
             this.button14 = new System.Windows.Forms.Button();
             this.button13 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
-            this.labelNeuronValue = new System.Windows.Forms.Label();
+            this.labelEvaluationValue = new System.Windows.Forms.Label();
             this.button15 = new System.Windows.Forms.Button();
             this.button16 = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
+            this.labelDelta = new System.Windows.Forms.Label();
+            this.labeValue = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // button0
@@ -241,11 +243,11 @@
             // 
             // labelNeuronValue
             // 
-            this.labelNeuronValue.Location = new System.Drawing.Point(344, 191);
-            this.labelNeuronValue.Name = "labelNeuronValue";
-            this.labelNeuronValue.Size = new System.Drawing.Size(143, 284);
-            this.labelNeuronValue.TabIndex = 15;
-            this.labelNeuronValue.Text = "Status";
+            this.labelEvaluationValue.Location = new System.Drawing.Point(344, 191);
+            this.labelEvaluationValue.Name = "labelEvaluationValue";
+            this.labelEvaluationValue.Size = new System.Drawing.Size(143, 284);
+            this.labelEvaluationValue.TabIndex = 15;
+            this.labelEvaluationValue.Text = "Status";
             // 
             // button15
             // 
@@ -269,22 +271,41 @@
             // 
             // label1
             // 
-            this.label1.Location = new System.Drawing.Point(530, 196);
+            this.label1.Location = new System.Drawing.Point(551, 191);
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(54, 23);
             this.label1.TabIndex = 18;
             this.label1.Text = "label1";
             // 
+            // labelDelta
+            // 
+            this.labelDelta.Location = new System.Drawing.Point(624, 13);
+            this.labelDelta.Name = "labelDelta";
+            this.labelDelta.Size = new System.Drawing.Size(154, 405);
+            this.labelDelta.TabIndex = 19;
+            this.labelDelta.Text = "labelDelta";
+            // 
+            // labeValue
+            // 
+            this.labeValue.Location = new System.Drawing.Point(759, 13);
+            this.labeValue.Name = "labeValue";
+            this.labeValue.Size = new System.Drawing.Size(154, 405);
+            this.labeValue.TabIndex = 20;
+            this.labeValue.Text = "label2";
+            // 
             // FormMain
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(653, 555);
+            this.ClientSize = new System.Drawing.Size(925, 555);
+            this.Controls.Add(this.labeValue);
+            this.Controls.Add(this.labelDelta);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.button16);
             this.Controls.Add(this.button15);
-            this.Controls.Add(this.labelNeuronValue);
+            this.Controls.Add(this.labelEvaluationValue);
             this.Controls.Add(this.button14);
             this.Controls.Add(this.button13);
             this.Controls.Add(this.button12);
@@ -302,10 +323,14 @@
             this.Controls.Add(this.button1);
             this.Controls.Add(this.button0);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Location = new System.Drawing.Point(15, 15);
             this.Name = "FormMain";
-            this.Text = "Neural Network Window";
             this.ResumeLayout(false);
         }
+
+        private System.Windows.Forms.Label labeValue;
+
+        private System.Windows.Forms.Label labelDelta;
 
         private System.Windows.Forms.Label label1;
 
@@ -313,7 +338,7 @@
 
         private System.Windows.Forms.Button button15;
 
-        private System.Windows.Forms.Label labelNeuronValue;
+        private System.Windows.Forms.Label labelEvaluationValue;
 
         private System.Windows.Forms.Label labelStatus;
         private System.Windows.Forms.Button button0;
