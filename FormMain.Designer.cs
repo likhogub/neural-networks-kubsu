@@ -46,11 +46,15 @@
             this.button13 = new System.Windows.Forms.Button();
             this.button12 = new System.Windows.Forms.Button();
             this.labelEvaluationValue = new System.Windows.Forms.Label();
-            this.button15 = new System.Windows.Forms.Button();
-            this.button16 = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
-            this.labelDelta = new System.Windows.Forms.Label();
-            this.labeValue = new System.Windows.Forms.Label();
+            this.fitBtn = new System.Windows.Forms.Button();
+            this.randomizeBtn = new System.Windows.Forms.Button();
+            this.exportBtn = new System.Windows.Forms.Button();
+            this.importBtn = new System.Windows.Forms.Button();
+            this.epochLabel = new System.Windows.Forms.Label();
+            this.epochsUpDown = new System.Windows.Forms.NumericUpDown();
+            this.openFileDialog1 = new System.Windows.Forms.OpenFileDialog();
+            this.saveFileDialog1 = new System.Windows.Forms.SaveFileDialog();
+            ((System.ComponentModel.ISupportInitialize) (this.epochsUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // button0
@@ -199,11 +203,12 @@
             // 
             // labelStatus
             // 
-            this.labelStatus.Location = new System.Drawing.Point(344, 9);
+            this.labelStatus.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.labelStatus.Location = new System.Drawing.Point(318, 26);
             this.labelStatus.Name = "labelStatus";
-            this.labelStatus.Size = new System.Drawing.Size(143, 165);
+            this.labelStatus.Size = new System.Drawing.Size(185, 274);
             this.labelStatus.TabIndex = 12;
-            this.labelStatus.Text = "Prediction";
+            this.labelStatus.Text = "Prediction:";
             // 
             // button14
             // 
@@ -241,57 +246,80 @@
             this.button12.UseVisualStyleBackColor = false;
             this.button12.Click += new System.EventHandler(this.button12_Click);
             // 
-            // labelNeuronValue
+            // labelEvaluationValue
             // 
-            this.labelEvaluationValue.Location = new System.Drawing.Point(344, 191);
+            this.labelEvaluationValue.Location = new System.Drawing.Point(410, 9);
             this.labelEvaluationValue.Name = "labelEvaluationValue";
-            this.labelEvaluationValue.Size = new System.Drawing.Size(143, 284);
+            this.labelEvaluationValue.Size = new System.Drawing.Size(93, 17);
             this.labelEvaluationValue.TabIndex = 15;
-            this.labelEvaluationValue.Text = "Status";
+            this.labelEvaluationValue.Text = "Loss:";
             // 
-            // button15
+            // fitBtn
             // 
-            this.button15.Location = new System.Drawing.Point(347, 478);
-            this.button15.Name = "button15";
-            this.button15.Size = new System.Drawing.Size(139, 41);
-            this.button15.TabIndex = 16;
-            this.button15.Text = "Fit/Predict";
-            this.button15.UseVisualStyleBackColor = true;
-            this.button15.Click += new System.EventHandler(this.button15_Click);
+            this.fitBtn.Location = new System.Drawing.Point(410, 322);
+            this.fitBtn.Name = "fitBtn";
+            this.fitBtn.Size = new System.Drawing.Size(93, 29);
+            this.fitBtn.TabIndex = 16;
+            this.fitBtn.Text = "Fit";
+            this.fitBtn.UseVisualStyleBackColor = true;
+            this.fitBtn.Click += new System.EventHandler(this.fitBtn_Click);
             // 
-            // button16
+            // randomizeBtn
             // 
-            this.button16.Location = new System.Drawing.Point(515, 480);
-            this.button16.Name = "button16";
-            this.button16.Size = new System.Drawing.Size(90, 38);
-            this.button16.TabIndex = 17;
-            this.button16.Text = "regen";
-            this.button16.UseVisualStyleBackColor = true;
-            this.button16.Click += new System.EventHandler(this.button16_Click);
+            this.randomizeBtn.Location = new System.Drawing.Point(318, 457);
+            this.randomizeBtn.Name = "randomizeBtn";
+            this.randomizeBtn.Size = new System.Drawing.Size(185, 43);
+            this.randomizeBtn.TabIndex = 17;
+            this.randomizeBtn.Text = "Randomize";
+            this.randomizeBtn.UseVisualStyleBackColor = true;
+            this.randomizeBtn.Click += new System.EventHandler(this.randomizeBtn_Click);
             // 
-            // label1
+            // exportBtn
             // 
-            this.label1.Location = new System.Drawing.Point(551, 191);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(54, 23);
-            this.label1.TabIndex = 18;
-            this.label1.Text = "label1";
+            this.exportBtn.Location = new System.Drawing.Point(318, 357);
+            this.exportBtn.Name = "exportBtn";
+            this.exportBtn.Size = new System.Drawing.Size(185, 43);
+            this.exportBtn.TabIndex = 21;
+            this.exportBtn.Text = "Export";
+            this.exportBtn.UseVisualStyleBackColor = true;
+            this.exportBtn.Click += new System.EventHandler(this.exportBtn_Click);
             // 
-            // labelDelta
+            // importBtn
             // 
-            this.labelDelta.Location = new System.Drawing.Point(624, 13);
-            this.labelDelta.Name = "labelDelta";
-            this.labelDelta.Size = new System.Drawing.Size(154, 405);
-            this.labelDelta.TabIndex = 19;
-            this.labelDelta.Text = "labelDelta";
+            this.importBtn.Location = new System.Drawing.Point(318, 408);
+            this.importBtn.Name = "importBtn";
+            this.importBtn.Size = new System.Drawing.Size(185, 43);
+            this.importBtn.TabIndex = 22;
+            this.importBtn.Text = "Import";
+            this.importBtn.UseVisualStyleBackColor = true;
+            this.importBtn.Click += new System.EventHandler(this.importBtn_Click);
             // 
-            // labeValue
+            // epochLabel
             // 
-            this.labeValue.Location = new System.Drawing.Point(759, 13);
-            this.labeValue.Name = "labeValue";
-            this.labeValue.Size = new System.Drawing.Size(154, 405);
-            this.labeValue.TabIndex = 20;
-            this.labeValue.Text = "label2";
+            this.epochLabel.Location = new System.Drawing.Point(320, 9);
+            this.epochLabel.Name = "epochLabel";
+            this.epochLabel.Size = new System.Drawing.Size(84, 17);
+            this.epochLabel.TabIndex = 23;
+            this.epochLabel.Text = "Epoch: 0";
+            // 
+            // epochsUpDown
+            // 
+            this.epochsUpDown.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte) (0)));
+            this.epochsUpDown.Location = new System.Drawing.Point(320, 322);
+            this.epochsUpDown.Maximum = new decimal(new int[] {1000000, 0, 0, 0});
+            this.epochsUpDown.Name = "epochsUpDown";
+            this.epochsUpDown.Size = new System.Drawing.Size(84, 29);
+            this.epochsUpDown.TabIndex = 24;
+            this.epochsUpDown.Value = new decimal(new int[] {1000, 0, 0, 0});
+            // 
+            // openFileDialog1
+            // 
+            this.openFileDialog1.FileName = "openFileDialog1";
+            this.openFileDialog1.Filter = "XML file (*.xml)|*.xml";
+            // 
+            // saveFileDialog1
+            // 
+            this.saveFileDialog1.Filter = "XML file (*.xml)|*.xml";
             // 
             // FormMain
             // 
@@ -299,12 +327,13 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Control;
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
-            this.ClientSize = new System.Drawing.Size(925, 555);
-            this.Controls.Add(this.labeValue);
-            this.Controls.Add(this.labelDelta);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.button16);
-            this.Controls.Add(this.button15);
+            this.ClientSize = new System.Drawing.Size(515, 515);
+            this.Controls.Add(this.epochsUpDown);
+            this.Controls.Add(this.epochLabel);
+            this.Controls.Add(this.importBtn);
+            this.Controls.Add(this.exportBtn);
+            this.Controls.Add(this.randomizeBtn);
+            this.Controls.Add(this.fitBtn);
             this.Controls.Add(this.labelEvaluationValue);
             this.Controls.Add(this.button14);
             this.Controls.Add(this.button13);
@@ -325,14 +354,29 @@
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Location = new System.Drawing.Point(15, 15);
             this.Name = "FormMain";
+            ((System.ComponentModel.ISupportInitialize) (this.epochsUpDown)).EndInit();
             this.ResumeLayout(false);
         }
 
-        private System.Windows.Forms.Label labeValue;
+        private System.Windows.Forms.OpenFileDialog openFileDialog1;
+        private System.Windows.Forms.SaveFileDialog saveFileDialog1;
 
-        private System.Windows.Forms.Label labelDelta;
+        private System.Windows.Forms.NumericUpDown epochsUpDown;
+
+        private System.Windows.Forms.NumericUpDown numericUpDown1;
+
+        private System.Windows.Forms.Label epochLabel;
 
         private System.Windows.Forms.Label label1;
+
+        private System.Windows.Forms.Button fitBtn;
+
+        private System.Windows.Forms.Button importBtn;
+
+        private System.Windows.Forms.Button randomizeBtn;
+
+        private System.Windows.Forms.Button exportBtn;
+        
 
         private System.Windows.Forms.Button button16;
 
