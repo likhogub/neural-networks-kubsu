@@ -90,8 +90,9 @@ namespace neural_networks_kubsu.NeuralNetwork
                     CorrectWeights(learningRate);
                 }
 
-                if (epoch % 10 == 0)
+                if ((epoch + 1) % 10 == 0)
                 {
+                    FormMain.LabelEpochs.Text = "Epoch: " + (epoch + 1);
                     FormMain.LabelNeurons.Text = "Loss: " + Evaluate(inputBatch, outputBatch);
                 }
             }
@@ -104,9 +105,19 @@ namespace neural_networks_kubsu.NeuralNetwork
             {
                 s += Math.Pow(_lossFunction.ComputeLoss(Predict(inputBatch[i]), outputBatch[i]), 2.0);
             }
-            return Math.Sqrt(s);
+            return Math.Round(Math.Sqrt(s), 4);
         }
 
+        public double[][][] ExportWeights()
+        {
+            var array = new double[_layers.Count][][];
+            for (var i = 0; i < _layers.Count; i++)
+            {
+                array[i] = _layers[i].Weights;
+            }
+            return array;
+        }
+        
         public static NeuralNetworkBuilder Builder()
         {
             return new NeuralNetworkBuilder();

@@ -76,6 +76,7 @@
         <Compile Include="NeuralNetwork\WeightsInitializer\DefaultWeightsInitializer\DefaultWeightsInitializer.cs" />
         <Compile Include="NeuralNetwork\WeightsInitializer\IWeightsInitializer.cs" />
         <Compile Include="NeuralNetwork\WeightsInitializer\OnesWeightsInitializer\OnesWeightsInitializer.cs" />
+        <Compile Include="NeuralNetwork\WeightsInitializer\SavedWeightsInitializer\SavedWeightsInitializer.cs" />
         <Compile Include="NeuralNetwork\WeightsInitializer\ZerosWeightsInitializer\ZerosWeightsInitializer.cs" />
         <Compile Include="Program.cs" />
         <Compile Include="Properties\AssemblyInfo.cs" />
