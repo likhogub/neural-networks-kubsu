@@ -26,7 +26,7 @@
             for (var i = 0; i < Neurons.Length; i++)
             {
                 var errorValue = expectedData[i] - Neurons[i].ActivationValue;
-                Neurons[i].Delta = ActivationFunction.Derivative(Neurons[i].NeuronValue) * errorValue;
+                Neurons[i].Delta = Neurons[i].DerivativeValue * errorValue;
             }
         }
     }

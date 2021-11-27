@@ -1,6 +1,4 @@
-﻿using neural_networks_kubsu.NeuralNetwork.Neuron.InputNeuron;
-
-namespace neural_networks_kubsu.NeuralNetwork.Layer.InputLayer
+﻿namespace neural_networks_kubsu.NeuralNetwork.Layer.InputLayer
 {
     public class InputLayer : AbstractLayer, IInputLayer
     {
@@ -8,7 +6,7 @@ namespace neural_networks_kubsu.NeuralNetwork.Layer.InputLayer
         {
             for (var i = 0; i < units; i++)
             {
-                Neurons[i] = new InputNeuron();
+                Neurons[i] = new Neuron.Neuron(null);
             }
         }
 
@@ -16,7 +14,8 @@ namespace neural_networks_kubsu.NeuralNetwork.Layer.InputLayer
         {
             for (var i = 0; i < inputData.Length; i++)
             {
-                ((InputNeuron) Neurons[i]).ActivationValue = inputData[i];
+                
+                Neurons[i].ActivationValue = inputData[i];
             }
         }
     }

@@ -7,7 +7,7 @@
         double[][] Weights { get; set; }
         void ComputeNeurons();
         void CorrectWeights(double learningRate);
-        void Initialize();
-        public void ComputeDelta();
+        void InitializeWeights();
+        public void ComputeDelta(double inertia);
     }
 }
