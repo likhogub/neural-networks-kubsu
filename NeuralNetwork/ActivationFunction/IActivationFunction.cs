@@ -1,8 +1,11 @@
-﻿namespace neural_networks_kubsu.NeuralNetwork.ActivationFunction
+﻿using neural_networks_kubsu.NeuralNetwork.Layer;
+using neural_networks_kubsu.NeuralNetwork.Neuron;
+
+namespace neural_networks_kubsu.NeuralNetwork.ActivationFunction
 {
     public interface IActivationFunction
     {
-        double Activate(double value);
-        double Derivative(double value);
+        void ActivateNeuron(INeuron neuron);
+        void ActivateLayer(ILayer layer);
     }
 }

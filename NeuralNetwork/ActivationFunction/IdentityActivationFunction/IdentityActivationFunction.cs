@@ -1,15 +1,13 @@
-﻿namespace neural_networks_kubsu.NeuralNetwork.ActivationFunction.IdentityActivationFunction
-{
-    public class IdentityActivationFunction : IActivationFunction
-    {
-        public double Activate(double value)
-        {
-            return value;
-        }
+﻿using neural_networks_kubsu.NeuralNetwork.Neuron;
 
-        public double Derivative(double value)
+namespace neural_networks_kubsu.NeuralNetwork.ActivationFunction.IdentityActivationFunction
+{
+    public class IdentityActivationFunction : AbstractActivationFunction
+    {
+        public override void ActivateNeuron(INeuron neuron)
         {
-            return 1;
+            neuron.ActivationValue = neuron.NeuronValue;
+            neuron.DerivativeValue = 1.0;
         }
     }
 }

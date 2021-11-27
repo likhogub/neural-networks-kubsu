@@ -1,17 +1,15 @@
 ﻿using System;
+using neural_networks_kubsu.NeuralNetwork.Layer;
+using neural_networks_kubsu.NeuralNetwork.Neuron;
 
 namespace neural_networks_kubsu.NeuralNetwork.ActivationFunction.SigmoidActivationFunction
 {
-    public class SigmoidActivationFunction : IActivationFunction
+    public class SigmoidActivationFunction : AbstractActivationFunction
     {
-        public double Activate(double value)
+        public override void ActivateNeuron(INeuron neuron)
         {
-            return 1.0 / (1.0 + Math.Exp(-value));
-        }
-
-        public double Derivative(double value)
-        {
-            return Activate(value) * (1 - Activate(value));
+            neuron.ActivationValue = 1.0 / (1.0 + Math.Exp(-neuron.NeuronValue));
+            neuron.DerivativeValue = neuron.ActivationValue * (1 - neuron.ActivationValue);
         }
     }
 }

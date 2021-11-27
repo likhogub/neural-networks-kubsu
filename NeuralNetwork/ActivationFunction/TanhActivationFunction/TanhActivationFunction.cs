@@ -1,17 +1,14 @@
 ﻿using System;
+using neural_networks_kubsu.NeuralNetwork.Neuron;
 
 namespace neural_networks_kubsu.NeuralNetwork.ActivationFunction.TanhActivationFunction
 {
-    public class TanhActivationFunction : IActivationFunction
+    public class TanhActivationFunction : AbstractActivationFunction
     {
-        public double Activate(double value)
+        public override void ActivateNeuron(INeuron neuron)
         {
-            return Math.Tanh(value);
-        }
-
-        public double Derivative(double value)
-        {
-            return 1.0 - Math.Pow(Activate(value), 2);
+            neuron.ActivationValue = Math.Tanh(neuron.NeuronValue);
+            neuron.DerivativeValue = 1.0 - neuron.ActivationValue * neuron.ActivationValue;
         }
     }
 }

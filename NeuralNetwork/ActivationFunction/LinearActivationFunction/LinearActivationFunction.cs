@@ -1,36 +1,25 @@
-﻿namespace neural_networks_kubsu.NeuralNetwork.ActivationFunction.LinearActivationFunction
-{
-    public class LinearActivationFunction : IActivationFunction
-    {
-        public double Activate(double value)
-        {
-            if (value > 1)
-            {
-                return 1 + (value - 1) * 0.01;
-            }
-            else if (value < -1)
-            {
-                return -1 + (value + 1) * 0.01;
-            }
-            else
-            {
-                return value;
-            }
-        }
+﻿using neural_networks_kubsu.NeuralNetwork.Neuron;
 
-        public double Derivative(double value)
+namespace neural_networks_kubsu.NeuralNetwork.ActivationFunction.LinearActivationFunction
+{
+    public class LinearActivationFunction : AbstractActivationFunction
+    {
+        public override void ActivateNeuron(INeuron neuron)
         {
-            if (value > 1)
+            switch (neuron.NeuronValue)
             {
-                return 0.01;
-            }
-            else if (value < -1)
-            {
-                return 0.01;
-            }
-            else
-            {
-                return 1;
+                case > 1:
+                    neuron.ActivationValue = 1 + (neuron.NeuronValue - 1) * 0.01;
+                    neuron.DerivativeValue = 0.01;
+                    break;
+                case < -1:
+                    neuron.ActivationValue = -1 + (neuron.NeuronValue + 1) * 0.01;
+                    neuron.DerivativeValue = 0.01;
+                    break;
+                default:
+                    neuron.ActivationValue = neuron.NeuronValue;
+                    neuron.DerivativeValue = 1;
+                    break;
             }
         }
     }
