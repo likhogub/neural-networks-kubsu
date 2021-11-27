@@ -5,16 +5,15 @@ namespace neural_networks_kubsu.NeuralNetwork.Neuron
 {
     public class Neuron : INeuron
     {
-        public double ActivationValue { get; private set; }
+        public double ActivationValue { get; set; }
+        public double DerivativeValue { get; set; }
         public double NeuronValue { get; private set; }
         public double[] Weights { get; }
         public double Delta { get; set; }
-        private readonly IActivationFunction _activationFunction;
 
-        public Neuron(double[] weights, IActivationFunction activationFunction)
+        public Neuron(double[] weights)
         {
             Weights = weights;
-            _activationFunction = activationFunction;
         }
 
         public void Compute(ILayer prevLayer)
@@ -25,9 +24,7 @@ namespace neural_networks_kubsu.NeuralNetwork.Neuron
             {
                 sum += neurons[i].ActivationValue * Weights[i + 1];
             }
-
             NeuronValue = sum;
-            ActivationValue = _activationFunction.Activate(sum);
         }
 
         public void Correct(double learningRate, ILayer prevLayer)

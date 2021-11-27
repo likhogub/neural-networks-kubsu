@@ -2,11 +2,10 @@
 
 namespace neural_networks_kubsu.NeuralNetwork.Neuron.InputNeuron
 {
-    public class InputNeuron : Neuron, IInputNeuron
+    public class InputNeuron : Neuron
     {
-        public new double ActivationValue { get; set; }
         
-        public InputNeuron() : base(null, null)
+        public InputNeuron() : base(null)
         {
         }
 
