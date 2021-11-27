@@ -7,12 +7,9 @@ namespace neural_networks_kubsu.NeuralNetwork.WeightsInitializer.SavedWeightsIni
     {
         private readonly double[][][] _weights;
         
-        public SavedWeightsInitializer(string filename)
+        public SavedWeightsInitializer(double[][][] weights)
         {
-            var serializer = new XmlSerializer(typeof(double[][][]));
-            using var fs = new FileStream(filename, FileMode.OpenOrCreate);
-            _weights = (double[][][])serializer.Deserialize(fs);
-            fs.Close();
+            _weights = weights;
         }
         
         public double[][] Initialize(int prevLayerUnits, int units, int layerIndex)

@@ -2,10 +2,11 @@
 using System.Collections.Generic;
 using System.Linq;
 using neural_networks_kubsu.NeuralNetwork.ActivationFunction;
+using neural_networks_kubsu.NeuralNetwork.CallbackFunction;
+using neural_networks_kubsu.NeuralNetwork.Evaluator;
 using neural_networks_kubsu.NeuralNetwork.Layer.HiddenLayer;
 using neural_networks_kubsu.NeuralNetwork.Layer.InputLayer;
 using neural_networks_kubsu.NeuralNetwork.Layer.OutputLayer;
-using neural_networks_kubsu.NeuralNetwork.LossFunction;
 using neural_networks_kubsu.NeuralNetwork.WeightsInitializer;
 
 namespace neural_networks_kubsu.NeuralNetwork
@@ -13,10 +14,13 @@ namespace neural_networks_kubsu.NeuralNetwork
     public class NeuralNetwork
     {
         private IInputLayer _inputLayer;
-        private IOutputLayer OutputLayer => (IOutputLayer) _layers.Last();
         private readonly List<IHiddenLayer> _layers = new();
-        private ILossFunction _lossFunction;
-
+        private IOutputLayer OutputLayer => (IOutputLayer) _layers.Last();
+        private IEvaluator _evaluator;
+        private readonly LinkedList<ICallbackFunction> _callbackFunctions = new();
+        public int Epoch { get; private set; } = 0;
+        
+        
         public double[] Predict(double[] inputData)
         {
             _inputLayer.Feed(inputData);
@@ -24,13 +28,26 @@ namespace neural_networks_kubsu.NeuralNetwork
             {
                 layer.ComputeNeurons();
             }
-
             return OutputLayer.Result;
         }
 
-        public void Initialize(IWeightsInitializer weightsInitializer)
+        private void ConnectLayers()
         {
             _layers[0].PreviousLayer = _inputLayer;
+            
+            for (var layerIndex = 1; layerIndex <= _layers.Count - 1; layerIndex++)
+            {
+                _layers[layerIndex].PreviousLayer = _layers[layerIndex - 1];
+            }
+            
+            for (var layerIndex = 0; layerIndex < _layers.Count - 1; layerIndex++)
+            {
+                _layers[layerIndex].NextLayer = _layers[layerIndex + 1];
+            }
+        }
+        
+        public void InitializeWeights(IWeightsInitializer weightsInitializer)
+        {
             _layers[0].Weights = weightsInitializer.Initialize(
                 _inputLayer.Neurons.Length,
                 _layers[0].Neurons.Length,
@@ -46,20 +63,12 @@ namespace neural_networks_kubsu.NeuralNetwork
                 );
             }
 
-            for (var layerIndex = 0; layerIndex < _layers.Count - 1; layerIndex++)
-            {
-                _layers[layerIndex].NextLayer = _layers[layerIndex + 1];
-            }
-
-            for (var layerIndex = 1; layerIndex <= _layers.Count - 1; layerIndex++)
-            {
-                _layers[layerIndex].PreviousLayer = _layers[layerIndex - 1];
-            }
-
             foreach (var layer in _layers)
             {
-                layer.Initialize();
+                layer.InitializeWeights();
             }
+
+            Epoch = 0;
         }
 
         private void CorrectWeights(double learningRate)
@@ -70,42 +79,34 @@ namespace neural_networks_kubsu.NeuralNetwork
             }
         }
 
-        private void ComputeDelta(double[] data)
+        private void ComputeDelta(double inertia, double[] data)
         {
             OutputLayer.ComputeDelta(data);
             for (var i = _layers.Count - 2; i >= 0; i--)
             {
-                _layers[i].ComputeDelta();
+                _layers[i].ComputeDelta(inertia);
             }
         }
 
-        public void Fit(double[][] inputBatch, double[][] outputBatch, int epochs, double learningRate)
+        public double Evaluate() => _evaluator.Evaluate(this);
+
+        public void Fit(double[][] inputBatch, double[][] outputBatch, int epochs, double learningRate, double inertia)
         {
-            for (var epoch = 0; epoch < epochs; epoch++)
+            var endEpoch = Epoch + epochs;
+            for (; Epoch < endEpoch; Epoch++)
             {
                 for (var i = 0; i < inputBatch.Length; i++)
                 {
                     Predict(inputBatch[i]);
-                    ComputeDelta(outputBatch[i]);
+                    ComputeDelta(inertia, outputBatch[i]);
                     CorrectWeights(learningRate);
                 }
 
-                if ((epoch + 1) % 10 == 0)
+                foreach (var callbackFunction in _callbackFunctions)
                 {
-                    FormMain.LabelEpochs.Text = "Epoch: " + (epoch + 1);
-                    FormMain.LabelNeurons.Text = "Loss: " + Evaluate(inputBatch, outputBatch);
+                    callbackFunction.Invoke(this);
                 }
             }
-        }
-
-        public double Evaluate(double[][] inputBatch, double[][] outputBatch)
-        {
-            var s = 0.0;
-            for (var i = 0; i < inputBatch.Length; i++)
-            {
-                s += Math.Pow(_lossFunction.ComputeLoss(Predict(inputBatch[i]), outputBatch[i]), 2.0);
-            }
-            return Math.Round(Math.Sqrt(s), 4);
         }
 
         public double[][][] ExportWeights()
@@ -150,12 +151,18 @@ namespace neural_networks_kubsu.NeuralNetwork
                 return this;
             }
 
-            public NeuralNetworkBuilder LossFunction(ILossFunction lossFunction)
+            public NeuralNetworkBuilder Evaluator(IEvaluator evaluator)
             {
-                _instance._lossFunction = lossFunction;
+                _instance._evaluator = evaluator;
                 return this;
             }
 
+            public NeuralNetworkBuilder CallbackFunction(ICallbackFunction callbackFunction)
+            {
+                _instance._callbackFunctions.AddLast(callbackFunction);
+                return this;
+            }
+            
             public NeuralNetwork Build()
             {
                 if (_instance._inputLayer == null)
@@ -168,11 +175,13 @@ namespace neural_networks_kubsu.NeuralNetwork
                     throw new Exception("OutputLayer not provided");
                 }
 
-                if (_instance._lossFunction == null)
+                if (_instance._evaluator == null)
                 {
-                    throw new Exception("LossFunction not provided");
+                    throw new Exception("Evaluator not provided");
                 }
 
+                _instance.ConnectLayers();
+                
                 return _instance;
             }
         }

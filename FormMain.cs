@@ -4,9 +4,12 @@ using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 using System.Xml.Serialization;
-using neural_networks_kubsu.NeuralNetwork.ActivationFunction.SigmoidActivationFunction;
+using neural_networks_kubsu.NeuralNetwork.ActivationFunction.SoftMaxActivationFunction;
 using neural_networks_kubsu.NeuralNetwork.ActivationFunction.TanhActivationFunction;
-using neural_networks_kubsu.NeuralNetwork.LossFunction.EuclideanDistanceLoss;
+using neural_networks_kubsu.NeuralNetwork.CallbackFunction.ChartCallbackFunction;
+using neural_networks_kubsu.NeuralNetwork.CallbackFunction.EpochCallbackFunction;
+using neural_networks_kubsu.NeuralNetwork.CallbackFunction.EvaluatorCallbackFunction;
+using neural_networks_kubsu.NeuralNetwork.Evaluator.MSEEvaluator;
 using neural_networks_kubsu.NeuralNetwork.WeightsInitializer.DefaultWeightsInitializer;
 using neural_networks_kubsu.NeuralNetwork.WeightsInitializer.SavedWeightsInitializer;
 
@@ -16,8 +19,6 @@ namespace neural_networks_kubsu
     {
         private readonly double[] _inputArray = new double[15];
 
-        public static Label LabelEpochs;
-        public static Label LabelNeurons;
         private NeuralNetwork.NeuralNetwork _nn;
 
         private readonly double[][] _inputData =
@@ -101,14 +102,6 @@ namespace neural_networks_kubsu
                 1.0, 1.0, 1.0,
                 0.0, 0.0, 1.0,
                 1.0, 1.0, 1.0
-            },
-            new[]
-            {
-                0.0, 0.0, 0.0,
-                0.0, 0.0, 0.0,
-                0.0, 0.0, 0.0,
-                0.0, 0.0, 0.0,
-                0.0, 0.0, 0.0
             }
         };
 
@@ -124,15 +117,12 @@ namespace neural_networks_kubsu
             new[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0, 0.0},
             new[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0, 0.0},
             new[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 1.0},
-            new[] {0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0, 0.0},
         };
 
 
         public FormMain()
         {
             InitializeComponent();
-            LabelNeurons = labelEvaluationValue;
-            LabelEpochs = epochLabel;
             CreateNeuralNetwork();
             Randomize();
         }
@@ -140,7 +130,9 @@ namespace neural_networks_kubsu
         private void Fit()
         {
             var epochs = decimal.ToInt32(epochsUpDown.Value);
-            _nn.Fit(_inputData, _outputData, epochs, 0.01);
+            var learningRate = decimal.ToDouble(learningRateUpDown.Value);
+            var inertia = decimal.ToDouble(inertiaUpDown.Value);
+            _nn.Fit(_inputData, _outputData, epochs, learningRate, inertia);
             Evaluate();
             Predict();
         }
@@ -149,16 +141,26 @@ namespace neural_networks_kubsu
         {
             _nn = NeuralNetwork.NeuralNetwork.Builder()
                 .InputLayer(15)
-                .HiddenLayer(76, new SigmoidActivationFunction())
-                .HiddenLayer(36, new SigmoidActivationFunction())
-                .OutputLayer(10, new SigmoidActivationFunction())
-                .LossFunction(new EuclideanDistanceLoss())
+                .HiddenLayer(76, new TanhActivationFunction())
+                .HiddenLayer(36, new TanhActivationFunction())
+                .OutputLayer(10, new SoftMaxActivationFunction())
+                .Evaluator(new MSEEvaluator(_inputData, _outputData))
+                .CallbackFunction(
+                    new EpochCallbackFunction((epoch) => { labelEpoch.Text = "Epoch: " + (epoch + 1); })
+                )
+                .CallbackFunction(new ChartCallbackFunction(10, chart1))
+                .CallbackFunction(
+                    new EvaluatorCallbackFunction(
+                        onEachEpoch: 10,
+                        evaluator: new MSEEvaluator(_inputData, _outputData),
+                        callback: (loss) => { labelLoss.Text = "Loss: " + loss; })
+                )
                 .Build();
         }
 
         private void Evaluate()
         {
-            labelEvaluationValue.Text = "Loss: " + _nn.Evaluate(_inputData, _outputData);
+            labelLoss.Text = "Loss: " + _nn.Evaluate();
         }
 
         private void Predict()
@@ -169,9 +171,10 @@ namespace neural_networks_kubsu
             {
                 s += i + ": " + Math.Round(prediction[i], 4) + "\n";
             }
-            labelStatus.Text = s;
+
+            labelPrediction.Text = s;
         }
-        
+
         private void Export()
         {
             if (saveFileDialog1.ShowDialog() == DialogResult.Cancel)
@@ -188,18 +191,22 @@ namespace neural_networks_kubsu
             if (openFileDialog1.ShowDialog() == DialogResult.Cancel)
                 return;
             var filename = openFileDialog1.FileName;
-            _nn.Initialize(new SavedWeightsInitializer(filename));
+            var serializer = new XmlSerializer(typeof(double[][][]));
+            using var fs = new FileStream(filename, FileMode.OpenOrCreate);
+            var weights = (double[][][]) serializer.Deserialize(fs);
+            fs.Close();
+            _nn.InitializeWeights(new SavedWeightsInitializer(weights));
             Predict();
             Evaluate();
         }
 
         private void Randomize()
         {
-            _nn.Initialize(new DefaultWeightsInitializer());
+            _nn.InitializeWeights(new DefaultWeightsInitializer());
             Predict();
             Evaluate();
         }
-        
+
         private void btn_click(Button btn)
         {
             var buttonId = btn.TabIndex;
